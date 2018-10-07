@@ -1,0 +1,46 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/earteshc/Desktop/Projects/ft_ssl_md5/ft_ssl_md5.h
+unistd.h
+-
+stdio.h
+-
+stdlib.h
+-
+lib/includes/libft.h
+/Users/earteshc/Desktop/Projects/ft_ssl_md5/lib/includes/libft.h
+lib/includes/ft_printf.h
+/Users/earteshc/Desktop/Projects/ft_ssl_md5/lib/includes/ft_printf.h
+
+/Users/earteshc/Desktop/Projects/ft_ssl_md5/lib/includes/ft_printf.h
+stdlib.h
+-
+unistd.h
+-
+stdarg.h
+-
+inttypes.h
+-
+limits.h
+-
+libft.h
+/Users/earteshc/Desktop/Projects/ft_ssl_md5/lib/includes/libft.h
+
+/Users/earteshc/Desktop/Projects/ft_ssl_md5/lib/includes/libft.h
+stdlib.h
+-
+string.h
+-
+unistd.h
+-
+
+/Users/earteshc/Desktop/Projects/ft_ssl_md5/md5.c
+ft_ssl_md5.h
+/Users/earteshc/Desktop/Projects/ft_ssl_md5/ft_ssl_md5.h
+
