@@ -2,9 +2,10 @@ cmake_minimum_required(VERSION 3.12)
 project(ft_ssl_md5 C)
 
 set(CMAKE_C_STANDARD 11)
+set(GCC_COVERAGE_COMPILE_FLAGS "-rdynamic")
 
 include_directories(lib/includes)
-
+add_definitions(${GCC_COVERAGE_COMPILE_FLAGS})
 add_executable(ft_ssl_md5
         lib/ft_printf/bonus_star.c
         lib/ft_printf/char.c

@@ -18,49 +18,20 @@ static void _md5(uint8_t *block, t_md5 *data)
     data->init.d += data->d;
 }
 
-ssize_t read_str(char *str, void *buff, size_t buff_size, size_t check_point)
-{
-    ssize_t len;
-    ssize_t read_n;
-
-    read_n = check_point;
-    len = ft_strlen(&str[read_n]);
-    ft_memset(buff, 0, buff_size);
-    if (len == 0 )
-        return 0;
-    if (len - check_point >= CHUNK_SIZE)
-    {
-        ft_memcpy(buff, &str[read_n], CHUNK_SIZE);
-        read_n =  CHUNK_SIZE;
-    }
-    else
-    {
-        ft_memcpy(buff, &str[read_n], len);
-        read_n = len;
-    }
-    return read_n;
-}
 
 
-int    md5(int fd, t_cntrl *c_block)
+
+
+
+int    md5(t_cntrl *c_block)
 {
     t_md5           dt;
-    static size_t minus_one;
 
     md5_init(&dt);
     while (1)
     {
-        if (c_block->s)
-            dt.read_n = read_str(c_block->command, dt.buf, CHUNK_SIZE, dt.t_len / 8);
-        else
-            dt.read_n = read(fd, dt.buf, CHUNK_SIZE);
-        if (minus_one)
+        if (msg_reader(c_block, &dt.t_len, dt.buf, &dt.read_n))
             break;
-        if ((dt.read_n <= 0 || dt.read_n < CHUNK_SIZE)&& minus_one == 0)
-            minus_one = 1;
-        if (c_block->p)
-            write(STDOUT_FILENO, dt.buf, (size_t) dt.read_n);
-         dt.t_len += dt.read_n * 8;
         if (!(dt.chnk = r_chnk(dt.buf, dt.read_n, dt.t_len, &dt.chnk_qnt)))
             return (0x01);
         _md5(dt.chnk, &dt);
@@ -77,4 +48,5 @@ int    md5(int fd, t_cntrl *c_block)
         print_hash(&dt);
     return (0);
 }
+
 

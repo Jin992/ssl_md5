@@ -3,6 +3,7 @@
 #include <execinfo.h>
 
 
+
 t_cntrl *cntrl_init(uint8_t str_input)
 {
     t_cntrl *cntrl_block;
@@ -12,6 +13,7 @@ t_cntrl *cntrl_init(uint8_t str_input)
     cntrl_block->q = 0;
     cntrl_block->r = 0;
     cntrl_block->s = 0;
+    cntrl_block->fd = 0;
     cntrl_block->str_input = str_input;
     cntrl_block->command = NULL;
     cntrl_block->next = NULL;
@@ -88,7 +90,7 @@ int main(int argc, char **argv)
     t_cntrl *c_block;
     t_cntrl *head;
     int fd = 0;
-    int (*funcs[3])(int, struct s_cntrl*) = {&md5, &sha256, 0};
+    int (*funcs[3])(struct s_cntrl*) = {&md5, &sha256, 0};
 
    if (argc == 1) {
        return 1;
@@ -104,15 +106,23 @@ int main(int argc, char **argv)
         head = head->next;
     }
 
-    void *ptr = funcs[0];
-    c_block->p = 1;
-    if (ft_strstr(backtrace_symbols(&ptr, 100)[0], argv[1]))
+
+    //c_block->p = 1;
+    int i = -1;
+    char *str1 = NULL;
+    while (funcs[++i] != NULL)
     {
-        //ft_printf("%s\n", backtrace_symbols(&ptr, 100)[0]);
-        md5(fd, c_block);
+        str1 = ft_strstr(backtrace_symbols((((void **)&(funcs[i]))), 100)[0], argv[1]);
+        void *ptr = &funcs[i];
+        ft_printf("-%s-\n", backtrace_symbols(&ptr, 100)[0]);
+        if (str1)
+        {
+
+           (*funcs[i])(c_block);
+            break;
+        }
     }
-    else
-        sha256(fd, &c_block);
+
     free_control(c_block);
     return (0);
 }

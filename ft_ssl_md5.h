@@ -93,6 +93,7 @@ typedef struct s_cntrl
     uint8_t         r;
     uint8_t         s;
     uint8_t         str_input;
+    int 			fd;
     char            *command;
     struct s_cntrl  *next;
 }               t_cntrl;
@@ -153,18 +154,19 @@ typedef struct          s_sha256
 
 
 void        md5_init(t_md5 *data);
-int         md5(int fd, t_cntrl *c_block);
+int         md5(t_cntrl *c_block);
 void        first_round(t_md5 *d, const uint8_t *w);
 void        second_round(t_md5 *d, const uint8_t *w);
 void        third_round(t_md5 *d, const uint8_t *w);
 void        four_round(t_md5 *d, const uint8_t *w);
 void        print_hash(t_md5 *block);
 void        sha256_init(t_sha256 *data);
-int         sha256(int fd, t_cntrl *c_block);
+int         sha256(t_cntrl *c_block);
 void        print_hash_sha256(t_sha256 *data);
 uint64_t    uint64_to_b_endian(uint64_t val);
 uint32_t    uint32_to_b_endian(uint32_t val);
 uint8_t     *r_chnk(uint8_t *chunk, ssize_t chunk_size, uint64_t total_size, uint64_t *chunks_qnt);
+int msg_reader(t_cntrl *c_block, uint64_t *t_len, uint8_t *buf, ssize_t *read_n);
 
 
 #endif //FT_SSL_MD5_H
